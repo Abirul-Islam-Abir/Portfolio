@@ -1,0 +1,12 @@
+export '../const/export.dart';
+export '../../main.dart';
+export '../../presentation/widgets/dummy_text.dart';
+export '../../presentation/ui/view screen/home_screen.dart';
+export '../../presentation/ui/view screen/widgets/animated_text.dart';
+export '../../presentation/ui/view screen/widgets/download_cv_btn.dart';
+export '../../presentation/ui/view screen/widgets/portfolio_background.dart';
+export '../../presentation/ui/view screen/widgets/welcome_text.dart';
+export '../../presentation/ui/view screen/widgets/user_name.dart';
+export '../../presentation/ui/view screen/widgets/what_i_can_do.dart';
+export 'package:flutter/material.dart';
+export '../../presentation/ui/view screen/widgets/carousel_builder.dart';
