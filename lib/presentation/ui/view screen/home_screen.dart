@@ -2,12 +2,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 import '../../../data/const/export.dart';
+import '../../../data/utils/dummy_data.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
   });
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return PortfolioBackground(
@@ -53,24 +60,43 @@ class HomeScreen extends StatelessWidget {
                           'wide range of services including brand design,programming '
                           'and teaching.'),
                       SizedBox(height: 40),
-                      CarouselBuilder(items: [
-                        Container(
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 220,
-                            width: double.infinity,
-                            child: Center(child: Text('Hellow')))
-                      ], onPage: (index, onPage) {}),
+                      CarouselBuilder(
+                          initialPage: selectedIndex,
+                          items: List.generate(
+                            dummyData.length,
+                            (index) => Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(20)),
+                              height: 220,
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  dummyData[selectedIndex]['title'],
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPage: (index, onPage) {
+                            setState(() {
+                              selectedIndex = index;
+                              print(selectedIndex);
+                            });
+                          }),
                     ],
                   ),
                 ),
               ),
               Positioned(
-                  top: 50,right: 20,
+                  top: 50,
+                  right: 20,
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                    height: 50,width: 50,child: Image.asset('assets/images/image1.png'),))
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                    height: 50,
+                    width: 50,
+                    child: Image.asset('assets/images/image1.png'),
+                  ))
             ],
           ),
         ),
@@ -78,4 +104,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

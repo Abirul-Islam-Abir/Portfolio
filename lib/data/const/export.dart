@@ -1,6 +1,6 @@
 export '../const/export.dart';
 export '../../main.dart';
-export '../../presentation/widgets/dummy_text.dart';
+export '../../presentation/widgets/dummy.dart';
 export '../../presentation/ui/view screen/home_screen.dart';
 export '../../presentation/ui/view screen/widgets/animated_text.dart';
 export '../../presentation/ui/view screen/widgets/download_cv_btn.dart';

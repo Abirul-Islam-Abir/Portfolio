@@ -5,10 +5,11 @@ class CarouselBuilder extends StatelessWidget {
   const CarouselBuilder({
     super.key,
     this.items,
-    this.onPage,
+    this.onPage, required this.initialPage,
   });
   final List<Widget>? items;
   final Function(int, CarouselPageChangedReason)? onPage;
+  final int initialPage;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class CarouselBuilder extends StatelessWidget {
         height: 250,
         aspectRatio: 16 / 9,
         viewportFraction: 0.6,
-        initialPage: 0,
+        initialPage: initialPage,
         enableInfiniteScroll: true,
         reverse: false,
         autoPlay: true,
