@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class PortfolioBackground extends StatelessWidget {
   const PortfolioBackground({
@@ -17,7 +15,7 @@ class PortfolioBackground extends StatelessWidget {
           image: AssetImage('assets/images/background.jpg'),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            Get.isDarkMode ? Colors.black : Colors.white,
+          Colors.white,
             BlendMode.difference,
           ),
         ),
