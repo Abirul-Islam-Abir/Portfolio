@@ -15,7 +15,7 @@ class PortfolioBackground extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/background.jpg'),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Get.isDarkMode ? Colors.black : Colors.white,
             BlendMode.difference,

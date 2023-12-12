@@ -1,23 +1,23 @@
 import '../model/dummy_data_model.dart';
-List<Map<String, dynamic>> dummyData = [
-  {
+List<Map<String, dynamic>> dummyPlatformData = [
+  {'image':'assets/icons/android.svg',
     'title': 'Android App Development',
     'subtitle': 'Are you interested in the great mobile app? Let\'s make it reality',
-    'skill': ['Flutter', 'Dart', 'Java']
+    'skill':  '''✔ Flutter\n✔ Dart\n✔ Java'''
   },
-  {
+  {'image':'assets/icons/website.svg',
     'title': 'Web Development',
     'subtitle': 'Build amazing websites with the latest technologies',
-    'skill': ['HTML', 'CSS', 'JavaScript']
+    'skill': '''✔ HTML\n✔ CSS\n✔ JavaScript'''
   },
-  {
+  {'image':'assets/icons/graphic.svg',
     'title': 'Machine Learning',
     'subtitle': 'Explore the fascinating field of machine learning and AI',
-    'skill': ['TensorFlow', 'Python', 'Deep Learning']
+    'skill': '''✔ TensorFlow\n✔ Python\n✔ Deep\n✔ Learning'''
   },
-  {
+  {'image':'assets/icons/apple.svg',
     'title': 'iOS App Development',
     'subtitle': 'Craft innovative and user-friendly iOS applications',
-    'skill': ['Swift', 'Objective-C', 'Xcode']
+    'skill': '''✔ Swift\n✔ Objective-C\n✔ Xcode'''
   }
 ];
