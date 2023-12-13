@@ -11,13 +11,16 @@ class DownloadCvButton extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      child: OutlinedButton(
-        onPressed: onTap,
-        child: Text(
-          text,
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: SizedBox(
+        width: 150,
+        child: OutlinedButton(
+          onPressed: onTap,
+          child: Text(
+            text,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );

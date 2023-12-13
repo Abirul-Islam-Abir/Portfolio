@@ -12,15 +12,18 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(text),
-        Image.asset(
-          image,
-          height: 20,
-          width: 20,
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          Text(text),
+          Image.asset(
+            image,
+            height: 20,
+            width: 20,
+          )
+        ],
+      ),
     );
   }
 }

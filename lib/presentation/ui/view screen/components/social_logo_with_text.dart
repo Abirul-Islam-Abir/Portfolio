@@ -24,13 +24,13 @@ class SocialLogoWithTextCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: 180,
+        height: 250,
         width: double.infinity,
-        padding:   const EdgeInsets.symmetric(horizontal:  8 ),
-        child: Column(
+        padding:   const EdgeInsets.symmetric(horizontal: 8 ),
+        child: Column(mainAxisAlignment: MainAxisAlignment. spaceEvenly,
           children: [
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -38,11 +38,11 @@ class SocialLogoWithTextCard extends StatelessWidget {
               children: [
                 Text(
                   headline,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 const Spacer(),
                 SizedBox(
-                  height: 25,
+                  height: 30,
                   child: OutlinedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -58,18 +58,15 @@ class SocialLogoWithTextCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 10),
-                ),
-                const Spacer(),
-                const Text('')
-              ],
+            const SizedBox(   height: 20,),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                subtitle,
+                style: const TextStyle(fontSize: 12),maxLines: 2,textAlign: TextAlign.start,
+              ),
             ),
-            const Spacer(),
+            Spacer(),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -79,7 +76,9 @@ class SocialLogoWithTextCard extends StatelessWidget {
                       image: '${logo[index]['imageUrl']}'),
                 ),
               ),
-            )
+            ), const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),

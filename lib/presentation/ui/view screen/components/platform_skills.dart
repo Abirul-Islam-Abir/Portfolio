@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../data/const/export.dart';
 
@@ -31,9 +32,11 @@ class PlatformSkills extends StatelessWidget {
               height: 50,
               width: 50,
             ),
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold),
+            FittedBox(
+              child: Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.bold,),maxLines: 1 
+              ),
             ),
             Text(
               subtitle,

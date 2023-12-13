@@ -8,9 +8,12 @@ class HeadlineText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: Text(text!,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
-          textAlign: TextAlign.center),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text(text!,
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
+            textAlign: TextAlign.center),
+      ),
     );
   }
 }

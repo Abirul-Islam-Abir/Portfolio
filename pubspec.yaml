@@ -38,7 +38,13 @@ dependencies:
   animated_text_kit: ^4.2.2
   carousel_slider: ^4.2.1
   flutter_svg: ^2.0.9
-  responsive_sizer: ^3.1.1
+  responsive_sizer: ^3.2.0
+  device_preview: ^1.1.0
+  firebase_database: ^10.3.8
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  get: ^4.6.6
+  cloud_firestore: ^4.13.6
 
 dev_dependencies:
   flutter_test:
