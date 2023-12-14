@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/presentation/state%20holder%20controller/home_screen_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../../data/const/export.dart';
 import '../../../data/const/dummy_platform_data.dart';
@@ -31,22 +32,50 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection('portfolio').snapshots();
+  late String downloadURL;
+  Future<void> downloadFile(String filePath) async {
+    try {
+      // Create a reference to the image file you want to download
+      firebase_storage.Reference ref =
+          firebase_storage.FirebaseStorage.instance.ref(filePath);
+
+      // Get the download URL
+      downloadURL = await ref.getDownloadURL();
+
+      // Now you can use the download URL to display the image using an Image widget
+      // For example, using the Image.network widget:
+      // Image.network(downloadURL);
+
+      print('Image download URL: $downloadURL');
+    } catch (e) {
+      print('Error downloading image: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    downloadFile('/portfolio/abir/user_image/craftybay.png');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // final controller =  Get.put(HomeScreenController());
     return PortfolioBackground(
       child: StreamBuilder<QuerySnapshot>(
           stream: _usersStream,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
             }
+            // print(snapshot.data!.docs[0]['dummyPlatformData']);
             return Scaffold(
               drawer: Responsive.isMobile(context)
                   ? const Drawer()
@@ -108,7 +137,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       DummyText('${snapshot.data!.docs[0]['dummy_text_a']}',
                           align: TextAlign.left),
                       SizedBox(height: 5.w),
-                      DownloadCvButton(text: 'Download CV', onTap: () {}),
+                      DownloadCvButton(
+                          text: 'Download CV',
+                          onTap: () {
+                            //  controller.myStringList[0];
+                          }),
                       SizedBox(height: 5.w),
                       const HeadlineText('What I can do?'),
                       SizedBox(height: 2.w),
@@ -118,62 +151,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? CarouselBuilder(
                               initialPage: selectedIndex,
                               items: buildCarouselList(
-                                  dummyPlatformData: dummyPlatformData),
+                                  data: snapshot.data!.docs[0]
+                                      ['dummyPlatformData']),
                               onPage: (index, onPage) {
                                 setState(() {
                                   selectedIndex = index;
                                 });
                               })
                           : Responsive.isTablet(context)
-                              ? Container(
-                                  height: 600,
-                                  child: GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: dummyPlatformData.length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            mainAxisExtent: 250,
-                                            crossAxisSpacing: 20,
-                                            mainAxisSpacing: 20),
-                                    itemBuilder: (context, index) =>
-                                        PlatformSkills(
-                                      skill: dummyPlatformData[index]['skill'],
-                                      image: dummyPlatformData[index]['image'],
-                                      title: dummyPlatformData[index]['title'],
-                                      subtitle: dummyPlatformData[index]
-                                          ['subtitle'],
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 350,
-                                  child: GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: dummyPlatformData.length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 4,
-                                            mainAxisExtent: 300,
-                                            crossAxisSpacing: 10),
-                                    itemBuilder: (context, index) =>
-                                        PlatformSkills(
-                                      skill: dummyPlatformData[index]['skill'],
-                                      image: dummyPlatformData[index]['image'],
-                                      title: dummyPlatformData[index]['title'],
-                                      subtitle: dummyPlatformData[index]
-                                          ['subtitle'],
-                                    ),
-                                  ),
-                                ),
+                              ? TabGridViewBuilder(
+                                  data: snapshot.data!.docs[0]
+                                      ['dummyPlatformData'])
+                              : WebGridViewBuilder(
+                                  data: snapshot.data!.docs[0]
+                                      ['dummyPlatformData']),
                       SizedBox(height: 5.h),
                       const HeadlineText('Projects'),
                       SizedBox(height: 3.h),
                       DummyText('${snapshot.data!.docs[0]['dummy_text_c']}'),
                       const SizedBox(height: 40),
-                      ProjectsView(data: dummyProjectsData),
+                      ProjectsView(
+                          data: snapshot.data!.docs[0]['dummyProjectData']),
                       SizedBox(height: 3.h),
                       SeeMoreButton(onTap: () {}, text: 'See more'),
                       SizedBox(height: 5.h),
@@ -194,6 +192,69 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }),
+    );
+  }
+}
+
+class TabGridViewBuilder extends StatelessWidget {
+  const TabGridViewBuilder({
+    super.key,
+    required this.data,
+  });
+  final List data;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 600,
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: data.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 250,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+        itemBuilder: (context, index) => PlatformSkills(
+          a: data[index]['a'] ?? '',
+          b: data[index]['b'] ?? '',
+          c: data[index]['c'] ?? '',
+          d: data[index]['d'] ?? '',
+          image: data[index]['image'] ?? '',
+          title: data[index]['title'] ?? '',
+          subtitle: data[index]['subtitle'] ?? '',
+        ),
+      ),
+    );
+  }
+}
+
+class WebGridViewBuilder extends StatelessWidget {
+  const WebGridViewBuilder({
+    super.key,
+    required this.data,
+  });
+  final List data;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 350,
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: data.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, mainAxisExtent: 300, crossAxisSpacing: 10),
+        itemBuilder: (context, index) => PlatformSkills(
+          a: data[index]['a'] ?? '',
+          b: data[index]['b'] ?? '',
+          c: data[index]['c'] ?? '',
+          d: data[index]['d'] ?? '',
+          image: data[index]['image'] ?? '',
+          title: data[index]['title'] ?? '',
+          subtitle: data[index]['subtitle'] ?? '',
+        ),
+      ),
     );
   }
 }

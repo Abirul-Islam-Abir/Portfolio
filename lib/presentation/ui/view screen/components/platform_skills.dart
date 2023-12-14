@@ -2,6 +2,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../data/const/export.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 class PlatformSkills extends StatelessWidget {
   const PlatformSkills({
@@ -9,9 +11,13 @@ class PlatformSkills extends StatelessWidget {
     required this.image,
     required this.title,
     required this.subtitle,
-    required this.skill,
+    required this.a,
+    required this.b,
+    required this.c,
+    required this.d,
   });
-  final String image, title, subtitle, skill;
+  final String image;
+  final String title, subtitle, a, b, c, d;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +33,13 @@ class PlatformSkills extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SvgPicture.asset(
-              image,
-              height: 50,
-              width: 50,
-            ),
+            CachedImage(image: image),
             FittedBox(
-              child: Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold,),maxLines: 1 
-              ),
+              child: Text(title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1),
             ),
             Text(
               subtitle,
@@ -46,15 +49,64 @@ class PlatformSkills extends StatelessWidget {
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Text(
-                  skill,
-                  textAlign: TextAlign.start,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      a,
+                      textAlign: TextAlign.start,
+                    ),
+                    Text(
+                      b,
+                      textAlign: TextAlign.start,
+                    ),
+                    Text(
+                      c,
+                      textAlign: TextAlign.start,
+                    ),
+                    Text(
+                      d,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class CachedImage extends StatelessWidget {
+  const CachedImage({
+    super.key,
+    required this.image,
+    this.height = 50,
+    this.width = 50,
+  });
+
+  final String image;
+
+  final double? height;
+  final double? width;
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: image,
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+        ),
+      ),
+      placeholder: (context, url) => SizedBox(
+          height: 50,
+          width: 50,
+          child: Center(child: CircularProgressIndicator())),
+      errorWidget: (context, url, error) => Icon(Icons.error),
+      height: height,
+      width: width,
     );
   }
 }

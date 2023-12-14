@@ -9,8 +9,8 @@ class HomeScreenController extends GetxController {
     super.onInit();
   }
 
-  final List  _myStringList = [];
-    get myStringList => _myStringList;
+      List<dynamic>  _myStringList = [];
+   List get myStringList => _myStringList;
 
   void listenToDataChanges() {
     // Reference to the "users" collection
@@ -18,8 +18,9 @@ class HomeScreenController extends GetxController {
 
     // Create a stream subscription to listen for changes
     var subscription = users.snapshots().listen((QuerySnapshot querySnapshot) {
-      for (var change in querySnapshot.docChanges) {
+      for (dynamic change in querySnapshot.docChanges) {
         // Handle different types of changes: added, modified, or removed
+        _myStringList.addAll(change.doc.data());
         if (change.type == DocumentChangeType.added) {
           print('Document added: ${change.doc.data()}');
         } else if (change.type == DocumentChangeType.modified) {
