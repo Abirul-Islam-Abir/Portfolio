@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
-import 'package:portfolio/presentation/state%20holder%20controller/home_screen_controller.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+  import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import '../../../data/const/export.dart';
-import '../../../data/const/dummy_platform_data.dart';
-import '../../../data/const/dummy_projects_data.dart';
 import '../../../data/const/dummy_social_logo.dart';
 import '../../../data/utils/responsive.dart';
 import 'components/build_carousel_list.dart';
@@ -14,10 +9,14 @@ import 'components/carousel_builder.dart';
 import 'components/download_cv_btn.dart';
 import 'components/platform_skills.dart';
 import 'components/portfolio_background.dart';
+import 'components/primary_btn.dart';
 import 'components/project_view.dart';
 import 'components/see_more_button.dart';
+import 'components/signature.dart';
 import 'components/social_logo_with_text.dart';
+import 'components/tab_gridview_builder.dart';
 import 'components/user_identity.dart';
+import 'components/web_gridview_builder.dart';
 import 'components/welcome_text.dart';
 import 'components/what_i_can_do.dart';
 
@@ -196,104 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class TabGridViewBuilder extends StatelessWidget {
-  const TabGridViewBuilder({
-    super.key,
-    required this.data,
-  });
-  final List data;
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 600,
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: data.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 250,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemBuilder: (context, index) => PlatformSkills(
-          a: data[index]['a'] ?? '',
-          b: data[index]['b'] ?? '',
-          c: data[index]['c'] ?? '',
-          d: data[index]['d'] ?? '',
-          image: data[index]['image'] ?? '',
-          title: data[index]['title'] ?? '',
-          subtitle: data[index]['subtitle'] ?? '',
-        ),
-      ),
-    );
-  }
-}
 
-class WebGridViewBuilder extends StatelessWidget {
-  const WebGridViewBuilder({
-    super.key,
-    required this.data,
-  });
-  final List data;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 350,
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: data.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, mainAxisExtent: 300, crossAxisSpacing: 10),
-        itemBuilder: (context, index) => PlatformSkills(
-          a: data[index]['a'] ?? '',
-          b: data[index]['b'] ?? '',
-          c: data[index]['c'] ?? '',
-          d: data[index]['d'] ?? '',
-          image: data[index]['image'] ?? '',
-          title: data[index]['title'] ?? '',
-          subtitle: data[index]['subtitle'] ?? '',
-        ),
-      ),
-    );
-  }
-}
 
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({
-    super.key,
-    required this.text,
-    required this.onTap,
-  });
-  final String text;
-  final Function() onTap;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        onPressed: onTap,
-        child: Text(text),
-      ),
-    );
-  }
-}
 
-class Signature extends StatelessWidget {
-  const Signature({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '< Abir />',
-      style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
-    );
-  }
-}
