@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-  import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../../../data/const/export.dart';
 import '../../../data/const/dummy_social_logo.dart';
@@ -21,7 +21,7 @@ import 'components/welcome_text.dart';
 import 'components/what_i_can_do.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+    HomeScreen({
     super.key,
   });
 
@@ -30,40 +30,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0;
-
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection('portfolio').snapshots();
-  late String downloadURL;
-  Future<void> downloadFile(String filePath) async {
-    try {
-      // Create a reference to the image file you want to download
-      firebase_storage.Reference ref =
-          firebase_storage.FirebaseStorage.instance.ref(filePath);
 
-      // Get the download URL
-      downloadURL = await ref.getDownloadURL();
-
-      // Now you can use the download URL to display the image using an Image widget
-      // For example, using the Image.network widget:
-      // Image.network(downloadURL);
-
-      print('Image download URL: $downloadURL');
-    } catch (e) {
-      print('Error downloading image: $e');
-    }
-  }
-
-  @override
-  void initState() {
-    downloadFile('/portfolio/abir/user_image/craftybay.png');
-    super.initState();
-  }
+final controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    // final controller =  Get.put(HomeScreenController());
-    return PortfolioBackground(
+     return PortfolioBackground(
       child: StreamBuilder<QuerySnapshot>(
           stream: _usersStream,
           builder:
@@ -115,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(width: 10.w)
                           ],
                         ),
-              body: SingleChildScrollView(
+              body: SingleChildScrollView(controller: controller,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: Responsive.isMobile(context) ? 0 : 10.w),
@@ -146,32 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: 2.w),
                       DummyText('${snapshot.data!.docs[0]['dummy_text_b']}'),
                       SizedBox(height: 2.w),
-                      Responsive.isMobile(context)
-                          ? CarouselBuilder(
-                              initialPage: selectedIndex,
-                              items: buildCarouselList(
-                                  data: snapshot.data!.docs[0]
-                                      ['dummyPlatformData']),
-                              onPage: (index, onPage) {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                              })
-                          : Responsive.isTablet(context)
-                              ? TabGridViewBuilder(
-                                  data: snapshot.data!.docs[0]
-                                      ['dummyPlatformData'])
-                              : WebGridViewBuilder(
-                                  data: snapshot.data!.docs[0]
-                                      ['dummyPlatformData']),
+                      PlatformView(data: snapshot.data!.docs),
                       SizedBox(height: 5.h),
                       const HeadlineText('Projects'),
                       SizedBox(height: 3.h),
                       DummyText('${snapshot.data!.docs[0]['dummy_text_c']}'),
                       const SizedBox(height: 40),
                       ProjectsView(
-                          data: snapshot.data!.docs[0]['dummyProjectData']),
-                      SizedBox(height: 3.h),
+                          data: snapshot.data!.docs[0]['dummyProjectData']), 
                       SeeMoreButton(onTap: () {}, text: 'See more'),
                       SizedBox(height: 5.h),
                       const HeadlineText('Get In Touch'),
@@ -195,6 +151,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class PlatformView extends StatefulWidget {
+  PlatformView({super.key, required this.data});
+  final List data;
+  @override
+  State<PlatformView> createState() => _PlatformViewState();
+}
 
-
-
+class _PlatformViewState extends State<PlatformView> {
+  int selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Responsive.isMobile(context)
+        ? CarouselBuilder(
+            initialPage: selectedIndex,
+            items: buildCarouselList(data: widget.data[0]['dummyPlatformData']),
+            onPage: (index, onPage) {
+              setState(() {
+                selectedIndex = index;
+              });
+            })
+        : Responsive.isTablet(context)
+            ? TabGridViewBuilder(data: widget.data[0]['dummyPlatformData'])
+            : WebGridViewBuilder(data: widget.data[0]['dummyPlatformData']);
+  }
+}

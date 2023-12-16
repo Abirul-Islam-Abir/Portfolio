@@ -12,11 +12,11 @@ class SocialLogoCard extends StatelessWidget {
     return Card(
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 15),
+        padding: const EdgeInsets.all(8.0),
         child: Image.network(
           image,
-          height: 20,
-          width: 20,
+          height: 15,
+          width: 15,
         ),
       ),
     );
