@@ -1,6 +1,6 @@
 
 import 'package:portfolio/presentation/ui/view%20screen/components/social_logo_card.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../../../data/const/dummy_social_logo.dart';
 import '../../../../data/const/export.dart';
 
@@ -61,7 +61,7 @@ class SocialLogoWithTextCard extends StatelessWidget {
             const SizedBox(   height: 20,),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(
+              child: AutoSizeText(
                 subtitle,
                 style: const TextStyle(fontSize: 12),maxLines: 2,textAlign: TextAlign.start,
               ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -34,14 +35,12 @@ class PlatformSkills extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CachedImage(image: image),
-            FittedBox(
-              child: Text(title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1),
-            ),
-            Text(
+            AutoSizeText(title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1),
+            AutoSizeText(
               subtitle,
               textAlign: TextAlign.center,
             ),

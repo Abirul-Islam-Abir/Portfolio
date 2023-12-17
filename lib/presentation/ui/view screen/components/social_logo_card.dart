@@ -1,4 +1,6 @@
 
+import 'package:responsive_sizer/responsive_sizer.dart';
+
 import '../../../../data/const/export.dart';
 
 class SocialLogoCard extends StatelessWidget {
@@ -9,15 +11,12 @@ class SocialLogoCard extends StatelessWidget {
   final String image;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Image.network(
-          image,
-          height: 15,
-          width: 15,
-        ),
+    return Container(
+      padding:   EdgeInsets.all(8.w/5),
+      child: Image.network(
+        image,
+        height: 30,
+        width: 30,
       ),
     );
   }

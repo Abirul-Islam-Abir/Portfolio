@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:portfolio/presentation/ui/view%20screen/components/primary_btn.dart';
 
@@ -28,6 +27,9 @@ class ProjectCard extends StatelessWidget {
           height: 200,
           width: double.infinity,
         ),
+        SizedBox(
+          height: 10,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
@@ -49,41 +51,10 @@ class ProjectCard extends StatelessWidget {
                   ],
                 ),
               ),
-              kIsWeb && Responsive.isMobile(context)
-                  ? Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                            onPressed: prevPress,
-                            icon: Icon(
-                              Icons.arrow_back_ios_outlined,
-                              size: 15,
-                            )),
-                        IconButton(
-                            onPressed: nextPress,
-                            icon: Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 15,
-                            )),
-                      ],
-                    ),
-                    PrimaryButton(
+             PrimaryButton(
                       text: 'Link',
                       onTap: linkTap,
-                    ),
-                  ],
-                ),
-              )
-                  : PrimaryButton(
-                text: 'Link',
-                onTap: linkTap,
-              )
+                    )
             ],
           ),
         ),
