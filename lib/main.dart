@@ -39,8 +39,8 @@ class Portfolio extends StatelessWidget {
           initialBinding: StateHolderBinding(),
           theme: ThemeData(
             fontFamily: 'Poppins',
-            //  brightness: Brightness.light,
-             brightness: Brightness.dark,
+            // brightness: Brightness.light,
+            brightness: Brightness.dark,
             scaffoldBackgroundColor: Colors.transparent,
             elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(backgroundColor: Colors.red)),
             appBarTheme: AppBarTheme(
