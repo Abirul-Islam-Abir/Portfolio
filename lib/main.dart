@@ -35,12 +35,12 @@ class Portfolio extends StatelessWidget {
           useInheritedMediaQuery: true,
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
-          title: 'Abir Portfolio',
+          title: 'Abirul Islam Abir',
           initialBinding: StateHolderBinding(),
           theme: ThemeData(
             fontFamily: 'Poppins',
-            brightness: Brightness.light,
-            // brightness: Brightness.dark,
+            //  brightness: Brightness.light,
+             brightness: Brightness.dark,
             scaffoldBackgroundColor: Colors.transparent,
             elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(backgroundColor: Colors.red)),
             appBarTheme: AppBarTheme(
