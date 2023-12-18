@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../../../data/const/export.dart';
@@ -43,10 +44,10 @@ final controller = ScrollController();
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return Scaffold(body: Center(child: CircularProgressIndicator()));
+              return Scaffold(body: ListView.builder(itemBuilder:  (context, index) => ListTileShimmer()));
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Scaffold(body: Center(child: CircularProgressIndicator()));
+              return Scaffold(body: ListView.builder(itemBuilder:  (context, index) => ListTileShimmer()));
             }
             // print(snapshot.data!.docs[0]['dummyPlatformData']);
             return Scaffold(
@@ -127,7 +128,7 @@ final controller = ScrollController();
                       DummyText('${snapshot.data!.docs[0]['dummy_text_c']}'),
                       const SizedBox(height: 40),
                       ProjectsView(
-                          data: snapshot.data!.docs[0]['dummyProjectData']), 
+                          data: snapshot.data!.docs[0]['dummyProjectData']),
                       SeeMoreButton(onTap: () {}, text: 'See more'),
                       SizedBox(height: 5.h),
                       const HeadlineText('Get In Touch'),
